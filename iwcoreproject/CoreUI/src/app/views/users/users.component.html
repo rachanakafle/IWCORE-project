@@ -1,0 +1,149 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header title-header">
+            <span class="project-heading">  Users Table</span>
+          <a class="icons-sm fb-ic" style="float: right" routerLink="add-new-users" ><i class="icon-plus icons font-3xl d-block mt-4"> </i></a>
+
+        </div>
+        <div class="ml-auto pt-3 mr-3">
+          <form class="form-inline">
+            <input class="form-control" type="text" name="search" style="border-radius: 50px;   border-width: 1.5px;
+            border-style: solid;
+            border-color: #2196F3;" placeholder="Search..." aria-label="Search"
+              [(ngModel)]="filter">
+          </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <!-- <th (click)="sort(first_name)" >First Name</th> -->
+                <th (click)="sort('first_name')">First Name
+                    <span class="icons cui-arrow-bottom pl-1" *ngIf="key =='first_name'"
+                  [ngClass]="{'icons cui-arrow-top':reverse,'icons cui-arrow-bottom':!reverse}"></span>
+                </th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+             <tr *ngFor="let sth of data | orderBy: key : reverse |  filter:filter | paginate: { itemsPerPage: 6, currentPage: p }; let i = index">
+                <td>{{ sth.id }}</td>
+                <ng-template #detailcontent let-modal>
+                        <div class="modal-header">
+                                <h3 class="modal-title" id="modal-basic-title" class="ml-auto mr-auto">
+                                  User Details
+                                </h3>
+                                <span id="close-button" (click)="modal.dismiss('Cross click')">
+                                  X
+                                </span>
+                              </div>
+                  <span id="pop-content" [innerHTML]="forPopOver"></span>
+                </ng-template>
+
+                <td (click)="opendetail(detailcontent,sth)">{{ sth.first_name }}</td>
+                <td>{{ sth.last_name }}</td>
+                <td>{{ sth.email }}</td>
+                <td>{{sth.groups}}</td>
+                <td>
+                  <ng-template #content let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">
+                        Profile update
+                      </h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form [formGroup]="addUsersForm" (ngSubmit)=" 
+                              updateUser(sth.id); modal.close('Closed')
+                            ">
+                        <div class="form-group">
+                          <label>First name</label>
+                          <input type="text" formControlName="first_name" class="form-control"
+                            placeholder="Enter first name" />
+                        </div>
+
+                        <div class="form-group">
+                          <label>Last name</label>
+                          <input type="text" formControlName="last_name" class="form-control"
+                            placeholder="Enter last name" />
+                        </div>
+
+                        <div class="form-group">
+                          <label>Email</label>
+                          <input type="email" formControlName="email" class="form-control" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group">
+                          <label>Address</label>
+                          <input type="text" formControlName="address" class="form-control"
+                            placeholder="Enter address" />
+                        </div>
+
+                        <div class="form-group">
+                          <label>Contact</label>
+                          <input type="number" formControlName="contact" class="form-control"
+                            placeholder="Enter Contact" />
+                        </div>
+
+                        <!-- <div class="form-group">
+                          <label>Photo</label>
+                          <input type="file"  (change)="handleFileInput($event)" accept="image/*" class="file-input"  formControlName="photo" class="form-control" placeholder="Enter photo" />
+                        </div> -->
+
+                        <div class="form-group">
+                          <label>Position</label>
+                          <input type="text" formControlName="position" class="form-control"
+                            placeholder="Enter position" />
+                        </div>
+
+                        <div class="form-group">
+                          <label>Role</label>
+                          <select class="form-control" name="group" formControlName="groups" required>
+                            <option value="1">Developer</option>
+                            <option value="2">Project Manager</option>
+                            <option value="3">Partner</option>
+                          </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </form>
+
+                    </div>
+                  </ng-template>
+                  <div class="btn-group" dropdown>
+                    <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                      aria-controls="dropdown-basic">
+                      Action <span class="caret"></span>
+                    </button>
+                    <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                      aria-labelledby="button-basic">
+                      <li role="menuitem">
+                        <a class="dropdown-item" (click)="open(content, sth)">Edit</a>
+                      </li>
+
+                      <li class="divider dropdown-divider"></li>
+                      <li role="menuitem">
+                        <span (click)="delete(sth.id)" class="dropdown-item">Delete</span>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          

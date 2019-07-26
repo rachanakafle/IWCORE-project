@@ -1,0 +1,30 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+// .main .container-fluid {
+//     background:#cce6ff !important;
+//     padding-top: 20px;
+// }
+
+// .breadcrumb {
+//     margin-bottom: 0px !important;
+// }
+
+ul.ngx-pagination{
+    padding-left: 0px !important;
+}
+.title-header {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+
+// // app-sidebar-nav-items{
+// //     background-color:#778899;
+// }

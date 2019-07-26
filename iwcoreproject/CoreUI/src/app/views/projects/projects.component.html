@@ -1,0 +1,160 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header title-header">
+          <span class="project-heading">  Projects Lists Table</span>
+          <!-- <h1 class="text-center">Project Lists Table</h1> -->
+          <a class="icons-sm fb-ic" style="float: right" routerLink="add-projects"><i
+            class="icon-plus icons font-3xl d-block mt-4"> </i></a>
+        </div>
+          <div class="ml-auto pt-3 mr-3">
+            <form class="form-inline">
+              <input class="form-control" type="text" name="search" style="border-radius: 50px;   border-width: 1.5px;
+              border-style: solid;
+              border-color: #2196F3;" placeholder="Search..." aria-label="Search"
+                [(ngModel)]="filter">
+            </form>
+          </div>
+         
+        
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th (click)="sort('project_name')">Project Name
+                      <span class="icons cui-arrow-bottom pl-1" *ngIf="key =='project_name'"
+                    [ngClass]="{'icons cui-arrow-top':reverse,'icons cui-arrow-bottom':!reverse}"></span>
+                  </th>
+                  <th>Project Partner</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let sth of data | orderBy: key : reverse |  filter:filter | paginate: { itemsPerPage: 6, currentPage: p }; let i = index">
+
+                  <td>{{ sth.id }}</td>
+                  <td (click)="opendetail(detailcontent,sth)">{{ sth.project_name }}</td>
+                  <td>{{ sth.partner.user.first_name }}</td>
+
+                  <ng-template #detailcontent let-modal>
+                    <div class="modal-header">
+                      <h3 class="modal-title" id="modal-basic-title" class="mr-auto ml-auto">
+                        Projects Details
+                      </h3>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div>
+                      <span [innerHTML]="forPopOver"></span>
+                    </div>
+                  </ng-template>
+
+                  <td>
+                    <ng-template #content let-modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">
+                          Edit projects detail
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form [formGroup]="projectForm" (ngSubmit)="
+                          updateProject(sth.id); modal.close('Closed')
+                        ">
+                          <div class="form-group">
+                            <label>Project name</label>
+                            <input type="text" formControlName="project_name" class="form-control"
+                              placeholder="Enter project name" />
+                          </div>
+                          <div class="form-group">
+                            <label>Partner</label>
+                            <select class="form-control" formControlName="partner" placeholder="Choose Partner">
+                              <option value="" disabled selected hidden>Choose Partner</option>
+                              <option *ngFor="let part of partner" [value]="part.id">{{ part.user.first_name }}</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Project Manager</label>
+                            <select class="form-control" formControlName="project_manager"
+                              placeholder="Choose Project Manager">
+                              <option value="" disabled selected hidden>Choose Project Manager</option>
+                              <option *ngFor="let pm of projectManager" [value]="pm.id">{{ pm.user.first_name }}
+                                {{ pm.user.last_name }}</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Developers associated to project</label>
+                            <ng-multiselect-dropdown [(ngModel)]='myDevelopers' [placeholder]="'Choose Developers'"
+                              [data]="developers" formControlName="developer" [settings]="dropdownSettings">
+                            </ng-multiselect-dropdown>
+                          </div>
+                          <div class="form-group">
+                            <label>Theme</label>
+                            <input type="text" formControlName="theme" class="form-control"
+                              placeholder="Enter theme of the project" />
+                          </div>
+                          <div class="form-group">
+                            <label>Project Status</label>
+                            <select class="form-control" formControlName="status">
+                              <option>ONGOING</option>
+                              <option>QUEUED</option>
+                              <option>COMPLETED</option>
+                              <option>SUSPENDED</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" formControlName="start_date" class="form-control"
+                              placeholder="Enter start date" />
+                          </div>
+                          <div class="form-group">
+                            <label>End Date</label>
+                            <input type="date" formControlName="end_date" class="form-control"
+                              placeholder="Enter end date" />
+                          </div>
+
+                          <button type="submit" class="btn btn-primary">
+                            Submit
+                          </button>
+                        </form>
+                      </div>
+                    </ng-template>
+
+                    <div class="btn-group" dropdown>
+                      <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                        aria-controls="dropdown-basic">
+                        Action <span class="caret"></span>
+                      </button>
+                      <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu"
+                        aria-labelledby="button-basic">
+                        <li role="menuitem">
+                          <a class="dropdown-item" (click)="open(content, sth)">Edit</a>
+                        </li>
+
+                        <li class="divider dropdown-divider"></li>
+                        <li role="menuitem">
+                          <span (click)="delete(sth.id)" class="dropdown-item">Delete</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

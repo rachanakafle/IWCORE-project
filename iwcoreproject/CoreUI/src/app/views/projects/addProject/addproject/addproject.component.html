@@ -1,0 +1,128 @@
+<div class="container">
+  <div class="row">
+        <div class="col-md-8 mx-auto">
+              <div class="card-header p-4">
+                    <strong>Projects</strong>
+                    <small>Form</small>
+              </div>
+              <div class="card-group">
+
+                    <div class="card p-4">
+
+                          <div class="card-body">
+
+
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label>Project name</label>
+    <input
+      type="text"
+      formControlName="project_name"
+      class="form-control"
+      placeholder="Enter project name"
+      [ngClass]="{ 'is-invalid': submitted && f.project_name.errors }">
+      <div *ngIf="submitted && f.project_name.errors" class="invalid-feedback">
+          <div *ngIf="f.first_name.errors.required">Project Name is required</div>
+
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label>Partner</label>
+    <select
+      class="form-control"
+      formControlName="partner"
+      placeholder="Choose Partner"
+      [ngClass]="{ 'is-invalid': submitted && f.partner.errors }">
+      <div *ngIf="submitted && f.partner.errors" class="invalid-feedback">
+          <div *ngIf="f.partner.errors.required">Partner name is required</div>
+
+    </div>
+      <option value="" disabled selected hidden>Choose Partner</option>
+      <option *ngFor="let part of partner" [value]="part.id">{{
+        part.user.first_name
+      }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Project Manager</label>
+    <select
+      class="form-control"
+      formControlName="project_manager"
+      placeholder="Choose Project Manager"
+      [ngClass]="{ 'is-invalid': submitted && f.project_manager.errors }">
+      <div *ngIf="submitted && f.project_manager.errors" class="invalid-feedback">
+          <div *ngIf="f.project_manager.errors.required">ProjectManager Name is required</div>
+
+    </div>
+    
+      <option value="" disabled selected hidden>Choose Project Manager</option>
+      <option *ngFor="let pm of projectManager" [value]="pm.id"
+        >{{ pm.user.first_name }} {{ pm.user.last_name }}</option
+      >
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Developers associated to project</label>
+    <ng-multiselect-dropdown
+      [placeholder]="'Choose Developers'"
+      [data]="developers"
+      formControlName="developer"
+      [settings]="dropdownSettings"
+      [ngClass]="{ 'is-invalid': submitted && f.developer.errors }">
+      <div *ngIf="submitted && f.developer.errors" class="invalid-feedback">
+          <div *ngIf="f.developer.errors.required">Developer name is required</div>
+
+    </div>
+    
+    </ng-multiselect-dropdown>
+
+
+  </div>
+  <div class="form-group">
+    <label>Theme</label>
+    <input
+      type="text"
+      formControlName="theme"
+      class="form-control"
+      placeholder="Enter theme of the project"
+    />
+  </div>
+  <div class="form-group">
+    <label>Project Status</label>
+    <select class="form-control" formControlName="status">
+      <option>ONGOING</option>
+      <option>QUEUED</option>
+      <option>COMPLETED</option>
+      <option>SUSPENDED</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Start Date</label>
+    <input
+      type="date"
+      formControlName="start_date"
+      class="form-control"
+      placeholder="Enter start date"
+    />
+  </div>
+  <div class="form-group">
+    <label>End Date</label>
+    <input
+      type="date"
+      formControlName="end_date"
+      class="form-control"
+      placeholder="Enter end date"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+

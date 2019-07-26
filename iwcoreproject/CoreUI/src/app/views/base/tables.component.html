@@ -1,0 +1,74 @@
+<div class="animated fadeIn">
+  <div class="row">
+    
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Striped Table
+          <button routerLink="forms" class="btn btn-danger">Add</button>
+
+ 
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Group</th>
+                <th>k garne</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let sth of data">
+                    <td>{{sth.first_name}}</td>
+                    <td>{{sth.first_name}}</td> 
+                    <td>{{sth.email}}</td>
+                     <td>{{sth.groups}}</td>
+                     <td>
+                      <div class="btn-group" dropdown>
+                        <button type="button" class="btn btn-danger">Action</button>
+                        <button type="button" dropdownToggle class="btn btn-danger dropdown-toggle dropdown-toggle-split">
+                          <span class="caret"></span>
+                          <span class="sr-only">Split button!</span>
+                        </button>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                          <li role="menuitem"><a class="dropdown-item" href="#">Edit</a></li>
+                        
+                          <li class="divider dropdown-divider"></li>
+                          <li role="menuitem"><a class="dropdown-item" href="#">Delete</a>
+                          </li>
+                        </ul>
+                      </div>
+                     </td>
+
+                    
+                  </tr>
+                  <!-- <tr *ngFor="let sth of data">
+                      <td>{{sth.last_name}}</td>
+                      
+                    </tr> -->
+                  </tbody>
+          </table>
+          <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>
+  <!--/.row-->
+
+  <!--/.row-->
+  
+  <!--/.row-->
+</div>
